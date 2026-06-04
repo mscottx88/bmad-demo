@@ -1416,13 +1416,17 @@ body {
 
 /* ---------- Cheat sheet screen (final step) ---------- */
 .ride--cheat {
-  width: min(680px, 100%);
+  width: min(1180px, 100%);
   z-index: 1;
   margin-top: 16px;
+  display: flex;
+  justify-content: center;
 }
 
 .cheat-screen {
-  width: min(960px, 100%);
+  width: 100%;
+  max-width: none;
+  text-align: left;
   background: rgba(0, 0, 0, 0.25);
   border: 1px solid var(--card-border);
   border-radius: 16px;
