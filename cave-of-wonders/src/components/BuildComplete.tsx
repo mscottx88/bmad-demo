@@ -91,16 +91,19 @@ export default function BuildComplete({ totals, reducedMotion }: Props) {
   );
 }
 
+// Pin positions derived from SVG street grid (viewBox 240×150).
+// Intersections: x=54/109/172 → 22.5/45.4/71.7%  y=43/95 → 28.7/63.3%
+// Diagonal road runs (172,0)→(240,43); narrow side st at x=85 (35.4%)
 const MAP_PINS = [
-  { x: 28, y: 45, tier: 'above', delay: 0 },
-  { x: 42, y: 35, tier: 'above', delay: 90 },
-  { x: 58, y: 52, tier: 'at', delay: 180 },
-  { x: 33, y: 60, tier: 'below', delay: 270 },
-  { x: 66, y: 38, tier: 'critical', delay: 360 },
-  { x: 74, y: 58, tier: 'above', delay: 450 },
-  { x: 50, y: 70, tier: 'at', delay: 540 },
-  { x: 20, y: 52, tier: 'below', delay: 630 },
-  { x: 45, y: 25, tier: 'above', delay: 720 },
+  { x: 22.5, y: 28.7, tier: 'above',    delay: 0   }, // intersection col1×row1
+  { x: 35.4, y: 28.7, tier: 'above',    delay: 90  }, // top street near side-st
+  { x: 45.4, y: 28.7, tier: 'at',       delay: 180 }, // intersection col2×row1
+  { x: 46.0, y: 22.0, tier: 'above',    delay: 270 }, // park entrance on col2 st
+  { x: 71.7, y: 28.7, tier: 'above',    delay: 360 }, // intersection col3×row1
+  { x: 83.3, y: 14.0, tier: 'at',       delay: 450 }, // along diagonal road
+  { x: 22.5, y: 63.3, tier: 'below',    delay: 540 }, // intersection col1×row2
+  { x: 54.2, y: 63.3, tier: 'critical', delay: 630 }, // along bottom street
+  { x: 71.7, y: 63.3, tier: 'above',    delay: 720 }, // intersection col3×row2
 ] as const;
 
 const CHART_BARS = [
