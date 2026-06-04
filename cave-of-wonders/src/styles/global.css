@@ -31,8 +31,7 @@ body {
 /* ---------- Stage / cave backdrop ---------- */
 .stage {
   position: relative;
-  height: 100svh;
-  min-height: 100svh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -828,7 +827,7 @@ body {
   grid-template-columns: 184px 1fr;
   flex: 1;
   min-height: 280px;
-  max-height: calc(100svh - 200px);
+  max-height: calc(100vh - 200px);
   overflow: hidden;
 }
 
