@@ -829,7 +829,8 @@ body {
   display: grid;
   grid-template-columns: 184px 1fr;
   flex: 1;
-  min-height: 360px;
+  min-height: 320px;
+  max-height: calc(100svh - 230px);
   overflow: hidden;
 }
 
@@ -844,6 +845,8 @@ body {
   grid-template-rows: 1fr 130px minmax(0, 88px);
   min-width: 0;
   min-height: 0;
+  height: 100%;
+  overflow: hidden;
 }
 
 .workspace__main > * {
@@ -965,6 +968,8 @@ body {
   display: flex;
   flex-direction: column;
   min-width: 0;
+  min-height: 0;
+  overflow: hidden;
   background: #14132f;
 }
 

@@ -26,7 +26,7 @@ export function cheatSheetMarkdown(): string {
 
   return `# BMAD Method — Quick Reference
 
-> Generated from the Cave of Wonders demo. Example wish: ${WISH.appName}.
+> Generated from the BMAD Method demo. Example: ${WISH.appName}.
 
 ## Getting started
 \`\`\`bash

@@ -1,7 +1,7 @@
 import type { Phase, RideStep } from '../types';
 
 export const WISH = {
-  raw: 'I wish I could see how every Subway location performs against regional benchmarks — and where to open next.',
+  raw: 'Every Subway franchise location on one map — performance vs. regional benchmarks, and clear signals on where to open next.',
   appName: 'SubwayIQ',
   tagline: 'Franchise performance intelligence, on the map',
 } as const;

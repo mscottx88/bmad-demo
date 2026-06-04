@@ -7,8 +7,8 @@ interface Props {
 }
 
 function stepLabel(step: RideStep, i: number): string {
-  if (step.kind === 'intro') return 'Wish';
-  if (step.kind === 'climax') return 'Grant';
+  if (step.kind === 'intro') return 'Brainstorming';
+  if (step.kind === 'climax') return 'Implementation';
   if (step.kind === 'cheatsheet') return 'Recap';
   return `${step.phase?.persona.name ?? i}`;
 }
