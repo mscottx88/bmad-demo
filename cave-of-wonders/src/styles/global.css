@@ -31,11 +31,12 @@ body {
 /* ---------- Stage / cave backdrop ---------- */
 .stage {
   position: relative;
-  min-height: 100vh;
+  height: 100svh;
+  min-height: 100svh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 24px 24px 120px;
+  padding: 20px 24px 16px;
   background:
     radial-gradient(1100px 700px at 50% -10%, rgba(255, 216, 107, 0.16), transparent 60%),
     radial-gradient(900px 600px at 50% 120%, color-mix(in srgb, var(--accent) 35%, transparent), transparent 60%),
@@ -569,11 +570,8 @@ body {
 
 /* ---------- Controls ---------- */
 .controls {
-  position: fixed;
-  bottom: 18px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 5;
+  flex-shrink: 0;
+  margin-top: 12px;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -829,8 +827,8 @@ body {
   display: grid;
   grid-template-columns: 184px 1fr;
   flex: 1;
-  min-height: 320px;
-  max-height: calc(100svh - 230px);
+  min-height: 280px;
+  max-height: calc(100svh - 200px);
   overflow: hidden;
 }
 
