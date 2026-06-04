@@ -80,7 +80,7 @@ export default function FileTree({ files, newPaths, reducedMotion }: Props) {
   return (
     <aside className="tree" data-testid="file-tree">
       <div className="tree__title">EXPLORER</div>
-      <div className="tree__root">fridgechef/</div>
+      <div className="tree__root">subwayiq/</div>
       {tree.map((node) => (
         <Row key={node.path} node={node} depth={0} newPaths={newPaths} reducedMotion={reducedMotion} />
       ))}

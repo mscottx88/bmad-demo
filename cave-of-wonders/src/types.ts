@@ -31,7 +31,7 @@ export interface RewardDelta {
 
 /** A file produced during the workflow, shown in the growing file tree. */
 export interface TreeFile {
-  /** Repo-relative path, e.g. 'planning/prd.md' or 'src/api/recipes.ts'. */
+  /** Repo-relative path, e.g. 'planning/prd.md' or 'src/map/SubwayMap.tsx'. */
   path: string;
 }
 
@@ -40,7 +40,7 @@ export type EditorLanguage = 'md' | 'ts' | 'tsx';
 
 /** What the code editor streams/renders during a phase (one editor tab). */
 export interface EditorContent {
-  /** Tab label, e.g. 'prd.md' or 'recipes.ts'. */
+  /** Tab label, e.g. 'prd.md' or 'SubwayMap.tsx'. */
   filename: string;
   /** 'doc' renders Markdown-lite; 'code' shows token-colored source. */
   kind: EditorKind;
