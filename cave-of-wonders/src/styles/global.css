@@ -361,7 +361,7 @@ body {
 
 /* ---------- App mock (geospatial SubwayIQ dashboard) ---------- */
 .app-mock {
-  width: 360px;
+  width: min(500px, 100%);
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(0, 210, 106, 0.3);
@@ -400,18 +400,17 @@ body {
   color: #e5e7eb;
 }
 
-/* Map + chart side-by-side layout */
-.app-mock__map-body {
-  display: grid;
-  grid-template-columns: 1fr 110px;
+/* Dark map canvas — default size */
+.app-mock__map {
+  position: relative;
+  background: #22271a;
+  overflow: hidden;
   height: 150px;
 }
 
-/* Dark map canvas */
-.app-mock__map {
-  position: relative;
-  background: #232a1c;
-  overflow: hidden;
+/* Full-width variant used in the AppMock */
+.app-mock__map--full {
+  height: 220px;
 }
 
 /* Heatmap blobs */
@@ -423,29 +422,29 @@ body {
 }
 
 .heat-blob--1 {
-  width: 110px;
-  height: 90px;
-  left: 18%;
-  top: 22%;
-  background: radial-gradient(closest-side, rgba(239, 68, 68, 0.55), transparent);
+  width: 160px;
+  height: 110px;
+  left: 12%;
+  top: 12%;
+  background: radial-gradient(closest-side, rgba(239, 68, 68, 0.4), transparent);
   animation-delay: 0.05s;
 }
 
 .heat-blob--2 {
-  width: 90px;
-  height: 75px;
-  left: 48%;
-  top: 38%;
-  background: radial-gradient(closest-side, rgba(245, 158, 11, 0.5), transparent);
+  width: 130px;
+  height: 100px;
+  left: 38%;
+  top: 18%;
+  background: radial-gradient(closest-side, rgba(245, 158, 11, 0.38), transparent);
   animation-delay: 0.15s;
 }
 
 .heat-blob--3 {
-  width: 75px;
-  height: 65px;
-  left: 32%;
-  top: 56%;
-  background: radial-gradient(closest-side, rgba(34, 197, 94, 0.45), transparent);
+  width: 110px;
+  height: 90px;
+  left: 55%;
+  top: 25%;
+  background: radial-gradient(closest-side, rgba(34, 197, 94, 0.38), transparent);
   animation-delay: 0.25s;
 }
 
@@ -460,20 +459,60 @@ body {
   }
 }
 
-/* Location pins */
+/* Subway location circles */
 .map-pin {
   position: absolute;
-  width: 7px;
-  height: 7px;
+  width: 11px;
+  height: 11px;
   border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.85);
   transform: translate(-50%, -50%) scale(0);
-  animation: pin-pop 0.2s ease-out forwards;
+  animation: pin-pop 0.25s ease-out forwards;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
 }
 
-.map-pin--above  { background: #22c55e; box-shadow: 0 0 5px #22c55e; }
-.map-pin--at     { background: #f59e0b; box-shadow: 0 0 5px #f59e0b; }
-.map-pin--below  { background: #f97316; box-shadow: 0 0 5px #f97316; }
-.map-pin--critical { background: #ef4444; box-shadow: 0 0 5px #ef4444; }
+.map-pin--above    { background: #22c55e; }
+.map-pin--at       { background: #f59e0b; }
+.map-pin--below    { background: #f97316; }
+.map-pin--critical { background: #ef4444; }
+
+/* Inline map legend */
+.map-legend {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  background: rgba(10, 10, 18, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 6px;
+  padding: 5px 8px;
+}
+
+.map-legend__item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.75);
+  font-family: 'Cascadia Code', Consolas, monospace;
+}
+
+.map-legend__item::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.7);
+  flex-shrink: 0;
+}
+
+.map-legend__item--above::before    { background: #22c55e; }
+.map-legend__item--at::before       { background: #f59e0b; }
+.map-legend__item--below::before    { background: #f97316; }
+.map-legend__item--critical::before { background: #ef4444; }
 
 @keyframes pin-pop {
   0%   { transform: translate(-50%, -50%) scale(0); }

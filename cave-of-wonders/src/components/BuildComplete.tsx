@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import type { RewardTotals } from '../types';
 import { DEMO_APP } from '../data/phases';
@@ -91,29 +91,28 @@ export default function BuildComplete({ totals, reducedMotion }: Props) {
   );
 }
 
-// Pin positions derived from SVG street grid (viewBox 240×150).
-// Intersections: x=54/109/172 → 22.5/45.4/71.7%  y=43/95 → 28.7/63.3%
-// Diagonal road runs (172,0)→(240,43); narrow side st at x=85 (35.4%)
+// SVG viewBox is 500×220. Pins use x/y as % of that space.
+// Major streets: Main Blvd y=105 (47.7%), Central Ave x=210 (42%),
+// Grand Ave diagonal (0,105)→(210,35), secondary grid x=85,145,275,330 / y=35,65,140,165
 const MAP_PINS = [
-  { x: 22.5, y: 28.7, tier: 'above',    delay: 0   }, // intersection col1×row1
-  { x: 35.4, y: 28.7, tier: 'above',    delay: 90  }, // top street near side-st
-  { x: 45.4, y: 28.7, tier: 'at',       delay: 180 }, // intersection col2×row1
-  { x: 46.0, y: 22.0, tier: 'above',    delay: 270 }, // park entrance on col2 st
-  { x: 71.7, y: 28.7, tier: 'above',    delay: 360 }, // intersection col3×row1
-  { x: 83.3, y: 14.0, tier: 'at',       delay: 450 }, // along diagonal road
-  { x: 22.5, y: 63.3, tier: 'below',    delay: 540 }, // intersection col1×row2
-  { x: 54.2, y: 63.3, tier: 'critical', delay: 630 }, // along bottom street
-  { x: 71.7, y: 63.3, tier: 'above',    delay: 720 }, // intersection col3×row2
+  { x: 17, y: 15.9, tier: 'above',    delay: 0    }, // downtown 1st×A
+  { x: 29, y: 15.9, tier: 'above',    delay: 80   }, // downtown 2nd×A
+  { x: 42, y: 15.9, tier: 'at',       delay: 160  }, // Central Ave×A
+  { x: 17, y: 29.5, tier: 'above',    delay: 240  }, // downtown 1st×B
+  { x: 29, y: 29.5, tier: 'at',       delay: 320  }, // downtown 2nd×B
+  { x: 42, y: 29.5, tier: 'above',    delay: 400  }, // Central Ave×B
+  { x: 17, y: 47.7, tier: 'above',    delay: 480  }, // Main Blvd×1st
+  { x: 29, y: 47.7, tier: 'at',       delay: 560  }, // Main Blvd×2nd
+  { x: 42, y: 47.7, tier: 'above',    delay: 640  }, // Main Blvd×Central (major)
+  { x: 55, y: 47.7, tier: 'above',    delay: 720  }, // Main Blvd×midtown
+  { x: 55, y: 29.5, tier: 'at',       delay: 800  }, // midtown B
+  { x: 66, y: 29.5, tier: 'above',    delay: 880  }, // midtown east B
+  { x: 66, y: 47.7, tier: 'at',       delay: 960  }, // Main Blvd×park blvd
+  { x: 29, y: 77.3, tier: 'below',    delay: 1040 }, // south bank 2nd
+  { x: 55, y: 77.3, tier: 'critical', delay: 1120 }, // south bank midtown
 ] as const;
 
-const CHART_BARS = [
-  { label: 'NE', pct: 94, color: '#f59e0b' },
-  { label: 'SE', pct: 61, color: '#ef4444' },
-  { label: 'MW', pct: 112, color: '#22c55e' },
-  { label: 'SW', pct: 78, color: '#f97316' },
-] as const;
-
-/** Animated geospatial mock: heatmap blobs + pin plot + regional sales chart. */
+/** Full-width city map with animated Subway location circles. */
 function AppMock() {
   return (
     <div className="app-mock" data-testid="app-mock" aria-label={`${DEMO_APP.appName} app preview`}>
@@ -123,38 +122,23 @@ function AppMock() {
         <span className="app-mock__dot app-mock__dot--dark" />
         <span className="app-mock__title app-mock__title--dark">📍 {DEMO_APP.appName}</span>
       </div>
-      <div className="app-mock__map-body">
-        <div className="app-mock__map" aria-hidden>
-          <SatelliteMap />
-          <div className="heat-blob heat-blob--1" />
-          <div className="heat-blob heat-blob--2" />
-          <div className="heat-blob heat-blob--3" />
-          {MAP_PINS.map((pin, i) => (
-            <div
-              key={i}
-              className={`map-pin map-pin--${pin.tier}`}
-              style={{ left: `${pin.x}%`, top: `${pin.y}%`, animationDelay: `${pin.delay}ms` }}
-            />
-          ))}
-        </div>
-        <div className="app-mock__chart" aria-hidden>
-          <p className="app-mock__chart-label">Sales vs. Benchmark</p>
-          {CHART_BARS.map((bar) => (
-            <div key={bar.label} className="chart-row">
-              <span className="chart-row__label">{bar.label}</span>
-              <div className="chart-row__track">
-                <div
-                  className="chart-row__bar"
-                  style={
-                    {
-                      '--bar-pct': `${bar.pct}%`,
-                      '--bar-color': bar.color,
-                    } as React.CSSProperties
-                  }
-                />
-              </div>
-              <span className="chart-row__val">{bar.pct}%</span>
-            </div>
+      <div className="app-mock__map app-mock__map--full" aria-hidden>
+        <SatelliteMap />
+        <div className="heat-blob heat-blob--1" />
+        <div className="heat-blob heat-blob--2" />
+        <div className="heat-blob heat-blob--3" />
+        {MAP_PINS.map((pin, i) => (
+          <div
+            key={i}
+            className={`map-pin map-pin--${pin.tier}`}
+            style={{ left: `${pin.x}%`, top: `${pin.y}%`, animationDelay: `${pin.delay}ms` }}
+          />
+        ))}
+        <div className="map-legend">
+          {(['above','at','below','critical'] as const).map((t) => (
+            <span key={t} className={`map-legend__item map-legend__item--${t}`}>{
+              t === 'above' ? '≥110%' : t === 'at' ? '90–110%' : t === 'below' ? '70–89%' : '<70%'
+            }</span>
           ))}
         </div>
       </div>
@@ -162,96 +146,137 @@ function AppMock() {
   );
 }
 
-/**
- * SVG satellite-map slice — approximates a Mapbox satellite aerial view.
- * Absolutely positioned to fill .app-mock__map; heatmap blobs and pins
- * are layered on top via position:absolute siblings.
- */
+/** Inline SVG satellite city map — viewBox 500×220. */
 function SatelliteMap() {
   return (
     <svg
-      viewBox="0 0 240 150"
+      viewBox="0 0 500 220"
       preserveAspectRatio="xMidYMid slice"
       style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
       xmlns="http://www.w3.org/2000/svg"
     >
       <defs>
-        <linearGradient id="sm-terrain" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#3c3826" />
-          <stop offset="60%" stopColor="#2e2b1f" />
-          <stop offset="100%" stopColor="#232a1c" />
+        <linearGradient id="sm-bg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#2e2c1e" />
+          <stop offset="100%" stopColor="#22271a" />
         </linearGradient>
-        <linearGradient id="sm-water" x1="0" y1="0" x2="0" y2="1">
+        <linearGradient id="sm-river" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor="#0e3558" />
-          <stop offset="100%" stopColor="#082240" />
+          <stop offset="100%" stopColor="#092340" />
         </linearGradient>
       </defs>
 
-      {/* base terrain */}
-      <rect width="240" height="150" fill="url(#sm-terrain)" />
+      {/* ─── base terrain ─── */}
+      <rect width="500" height="220" fill="url(#sm-bg)" />
 
-      {/* ── top row blocks ── */}
-      <rect x="0"   y="0"  width="54"  height="43" fill="#484440" />
-      <rect x="5"   y="5"  width="22"  height="16" fill="#545250" />
-      <rect x="30"  y="5"  width="18"  height="12" fill="#525050" />
-      <rect x="5"   y="25" width="30"  height="14" fill="#4e4c48" />
+      {/* ─── DOWNTOWN blocks (x 0–210, y 0–105) ─── */}
+      {/* row A (y 2–33) */}
+      <rect x="2"   y="2"  width="81" height="31" fill="#484440" />
+      <rect x="6"   y="5"  width="28" height="14" fill="#525050" />
+      <rect x="38"  y="5"  width="38" height="10" fill="#504e4a" />
+      <rect x="6"   y="22" width="70" height="10" fill="#4e4c48" />
+      <rect x="87"  y="2"  width="56" height="31" fill="#4a4640" />
+      <rect x="91"  y="5"  width="22" height="16" fill="#545250" />
+      <rect x="117" y="5"  width="22" height="22" fill="#524e48" />
+      <rect x="147" y="2"  width="61" height="31" fill="#444038" />
+      <rect x="151" y="5"  width="30" height="20" fill="#4e4a44" />
+      <rect x="186" y="5"  width="18" height="14" fill="#504c46" />
+      {/* row B (y 37–63) */}
+      <rect x="2"   y="37" width="81" height="26" fill="#424038" />
+      <rect x="6"   y="40" width="35" height="18" fill="#4c4a44" />
+      <rect x="45"  y="40" width="34" height="12" fill="#4a4840" />
+      <rect x="87"  y="37" width="56" height="26" fill="#464240" />
+      <rect x="91"  y="40" width="48" height="19" fill="#504e48" />
+      <rect x="147" y="37" width="61" height="26" fill="#484440" />
+      <rect x="151" y="40" width="54" height="19" fill="#4e4a44" />
+      {/* row C (y 67–103) */}
+      <rect x="2"   y="67" width="81" height="36" fill="#444038" />
+      <rect x="6"   y="70" width="40" height="28" fill="#4c4844" />
+      <rect x="50"  y="70" width="28" height="14" fill="#4a4640" />
+      <rect x="50"  y="88" width="28" height="12" fill="#484440" />
+      <rect x="87"  y="67" width="56" height="36" fill="#464240" />
+      <rect x="91"  y="70" width="48" height="28" fill="#504c48" />
+      <rect x="147" y="67" width="61" height="36" fill="#424038" />
+      <rect x="151" y="70" width="26" height="28" fill="#4c4840" />
+      <rect x="181" y="70" width="23" height="20" fill="#4a4640" />
 
-      <rect x="57"  y="0"  width="52"  height="43" fill="#403e38" />
-      <rect x="61"  y="4"  width="24"  height="16" fill="#4e4c44" />
-      <rect x="89"  y="4"  width="16"  height="18" fill="#504e46" />
-      <rect x="61"  y="24" width="44"  height="15" fill="#484640" />
+      {/* ─── MIDTOWN blocks (x 212–355, y 0–105) ─── */}
+      <rect x="212" y="2"  width="61" height="61" fill="#3e3c34" />
+      <rect x="216" y="5"  width="30" height="25" fill="#484440" />
+      <rect x="250" y="5"  width="20" height="30" fill="#464240" />
+      <rect x="216" y="34" width="54" height="25" fill="#424038" />
+      <rect x="275" y="2"  width="53" height="61" fill="#424038" />
+      <rect x="279" y="5"  width="22" height="35" fill="#4c4844" />
+      <rect x="305" y="5"  width="20" height="22" fill="#4a4640" />
+      <rect x="279" y="44" width="46" height="16" fill="#464240" />
+      <rect x="330" y="2"  width="23" height="61" fill="#3c3a30" />
+      <rect x="212" y="67" width="61" height="36" fill="#3e3c34" />
+      <rect x="216" y="70" width="54" height="28" fill="#444038" />
+      <rect x="275" y="67" width="53" height="36" fill="#424038" />
+      <rect x="279" y="70" width="46" height="28" fill="#464240" />
+      <rect x="330" y="67" width="23" height="36" fill="#3a3830" />
 
-      {/* park patch — top centre-right */}
-      <rect x="112" y="0"  width="60"  height="43" fill="#1a3d18" />
-      <rect x="115" y="3"  width="54"  height="37" fill="#1e4520" opacity="0.7" />
-      <rect x="120" y="8"  width="18"  height="12" fill="#254d22" opacity="0.8" />
-      <rect x="145" y="10" width="20"  height="10" fill="#1c4018" opacity="0.7" />
+      {/* ─── PARK (x 357–498, y 2–103) ─── */}
+      <rect x="357" y="2"  width="141" height="101" fill="#19391a" />
+      <rect x="360" y="5"  width="135" height="95"  fill="#1c4020" opacity="0.65" />
+      <rect x="368" y="12" width="55"  height="38"  fill="#235225" opacity="0.75" />
+      <rect x="430" y="8"  width="58"  height="48"  fill="#1e4820" opacity="0.6"  />
+      <rect x="365" y="60" width="42"  height="35"  fill="#1a3e1c" opacity="0.7"  />
+      <rect x="415" y="62" width="68"  height="32"  fill="#214c22" opacity="0.65" />
 
-      <rect x="175" y="0"  width="65"  height="43" fill="#454038" />
-      <rect x="179" y="4"  width="28"  height="20" fill="#4e4c44" />
-      <rect x="211" y="4"  width="25"  height="15" fill="#504e48" />
-      <rect x="179" y="28" width="55"  height="12" fill="#484640" />
+      {/* ─── SOUTH ZONE (y 107–138) ─── */}
+      <rect x="2"   y="107" width="81"  height="31" fill="#3a3830" />
+      <rect x="87"  y="107" width="56"  height="31" fill="#3c3a32" />
+      <rect x="147" y="107" width="61"  height="31" fill="#3a3830" />
+      <rect x="212" y="107" width="61"  height="31" fill="#3a3830" />
+      <rect x="275" y="107" width="53"  height="31" fill="#3c3a32" />
+      <rect x="330" y="107" width="23"  height="31" fill="#383630" />
+      <rect x="357" y="107" width="141" height="31" fill="#3a3830" />
 
-      {/* ── middle row blocks ── */}
-      <rect x="0"   y="47" width="54"  height="48" fill="#3c3a36" />
-      <rect x="4"   y="51" width="26"  height="18" fill="#484642" />
-      <rect x="33"  y="51" width="18"  height="22" fill="#464440" />
-      <rect x="4"   y="74" width="46"  height="17" fill="#424038" />
+      {/* ─── RIVER (y 140–165) ─── */}
+      <polygon points="0,141 500,138 500,166 0,169" fill="url(#sm-river)" />
+      <polygon points="0,143 500,140 500,162 0,165" fill="#0d3560" opacity="0.7" />
+      <rect x="40"  y="147" width="90" height="5" fill="#103a6a" opacity="0.5" />
+      <rect x="200" y="150" width="120" height="4" fill="#0f3868" opacity="0.45" />
+      <rect x="370" y="148" width="80" height="5" fill="#103a6a" opacity="0.5" />
 
-      <rect x="57"  y="47" width="52"  height="48" fill="#464240" />
-      <rect x="61"  y="51" width="20"  height="16" fill="#525050" />
-      <rect x="85"  y="51" width="20"  height="14" fill="#505048" />
-      <rect x="61"  y="70" width="44"  height="21" fill="#4a4844" />
+      {/* ─── FAR SOUTH (y 167–220) ─── */}
+      <rect x="2"   y="167" width="81"  height="51" fill="#312e28" />
+      <rect x="87"  y="167" width="56"  height="51" fill="#333028" />
+      <rect x="147" y="167" width="61"  height="51" fill="#312e28" />
+      <rect x="212" y="167" width="61"  height="51" fill="#2e2c28" />
+      <rect x="275" y="167" width="53"  height="51" fill="#332e28" />
+      <rect x="330" y="167" width="23"  height="51" fill="#302c28" />
+      <rect x="357" y="167" width="141" height="51" fill="#312e28" />
 
-      <rect x="112" y="47" width="60"  height="48" fill="#3a3830" />
-      <rect x="116" y="51" width="28"  height="20" fill="#484440" />
-      <rect x="148" y="51" width="20"  height="18" fill="#464240" />
-      <rect x="116" y="74" width="52"  height="17" fill="#444038" />
+      {/* ─── LOCAL STREETS (downtown only, 1.5px) ─── */}
+      <line x1="0"   y1="50" x2="85"  y2="50"  stroke="#5a5448" strokeWidth="1.5" />
+      <line x1="0"   y1="80" x2="85"  y2="80"  stroke="#5a5448" strokeWidth="1.5" />
+      <line x1="115" y1="0"  x2="115" y2="35"  stroke="#5a5448" strokeWidth="1.5" />
+      <line x1="115" y1="37" x2="115" y2="63"  stroke="#5a5448" strokeWidth="1.5" />
+      <line x1="175" y1="37" x2="175" y2="63"  stroke="#5a5448" strokeWidth="1.5" />
+      <line x1="175" y1="67" x2="175" y2="103" stroke="#5a5448" strokeWidth="1.5" />
 
-      <rect x="175" y="47" width="65"  height="48" fill="#424038" />
-      <rect x="179" y="51" width="50"  height="28" fill="#484440" />
-      <rect x="179" y="83" width="55"  height="10" fill="#444240" />
+      {/* ─── SECONDARY STREETS (2.5px) ─── */}
+      <line x1="85"  y1="0"   x2="85"  y2="140" stroke="#7a7060" strokeWidth="2.5" />
+      <line x1="145" y1="0"   x2="145" y2="140" stroke="#7a7060" strokeWidth="2.5" />
+      <line x1="275" y1="0"   x2="275" y2="140" stroke="#7a7060" strokeWidth="2.5" />
+      <line x1="330" y1="0"   x2="330" y2="140" stroke="#7a7060" strokeWidth="2.5" />
+      <line x1="355" y1="0"   x2="355" y2="103" stroke="#7a7060" strokeWidth="2"   />
+      <line x1="85"  y1="166" x2="85"  y2="220" stroke="#7a7060" strokeWidth="2"   />
+      <line x1="145" y1="166" x2="145" y2="220" stroke="#7a7060" strokeWidth="2"   />
+      <line x1="275" y1="166" x2="275" y2="220" stroke="#7a7060" strokeWidth="2"   />
+      <line x1="0"   y1="35"  x2="210" y2="35"  stroke="#7a7060" strokeWidth="2.5" />
+      <line x1="0"   y1="65"  x2="210" y2="65"  stroke="#7a7060" strokeWidth="2.5" />
+      <line x1="0"   y1="140" x2="500" y2="140" stroke="#7a7060" strokeWidth="2.5" />
+      <line x1="0"   y1="166" x2="500" y2="166" stroke="#7a7060" strokeWidth="2"   />
 
-      {/* ── water ── */}
-      <rect x="0" y="98" width="240" height="52" fill="url(#sm-water)" />
-      {/* subtle water ripple variation */}
-      <rect x="20"  y="108" width="70" height="6"  fill="#0d3d68" opacity="0.45" />
-      <rect x="110" y="115" width="90" height="5"  fill="#0a3060" opacity="0.4"  />
-      <rect x="60"  y="125" width="50" height="4"  fill="#0f3a6a" opacity="0.35" />
+      {/* ─── GRAND AVENUE diagonal (0,105)→(210,35) ─── */}
+      <line x1="0" y1="105" x2="210" y2="35" stroke="#9a8e76" strokeWidth="4" opacity="0.9" />
 
-      {/* ── street grid ── */}
-      {/* horizontal */}
-      <rect x="0"   y="43" width="240" height="4" fill="#8a7e68" opacity="0.9" />
-      <rect x="0"   y="95" width="240" height="3" fill="#8a7e68" opacity="0.9" />
-      {/* vertical */}
-      <rect x="54"  y="0"  width="3"   height="95" fill="#8a7e68" opacity="0.9" />
-      <rect x="109" y="0"  width="3"   height="95" fill="#8a7e68" opacity="0.9" />
-      <rect x="172" y="0"  width="3"   height="95" fill="#8a7e68" opacity="0.9" />
-      {/* diagonal connector — adds realism */}
-      <line x1="172" y1="0" x2="240" y2="43" stroke="#8a7e68" strokeWidth="3" opacity="0.8" />
-      {/* narrow side street */}
-      <rect x="85"  y="0"  width="2"   height="43" fill="#7a7060" opacity="0.6" />
-      <rect x="0"   y="70" width="54"  height="2"  fill="#7a7060" opacity="0.6" />
+      {/* ─── MAIN ARTERIES (5px) ─── */}
+      <line x1="0"   y1="105" x2="500" y2="105" stroke="#9a8e76" strokeWidth="5" />
+      <line x1="210" y1="0"   x2="210" y2="220" stroke="#9a8e76" strokeWidth="5" />
     </svg>
   );
 }
