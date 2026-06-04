@@ -8,13 +8,13 @@ interface Props {
   enabled: boolean;
 }
 
-const CMD_CPS = 24;
+const CMD_CPS = 12;
 
 /** A faux terminal: types the real BMAD command, then streams its output. */
 export default function Terminal({ command, output, enabled }: Props) {
   const cmd = useTypewriter(command, { enabled, cps: CMD_CPS });
   const afterCmdMs = enabled ? (command.length / CMD_CPS) * 1000 + 350 : 0;
-  const lines = useLineStream(output, { enabled, lineMs: 700, delayMs: afterCmdMs });
+  const lines = useLineStream(output, { enabled, lineMs: 1400, delayMs: afterCmdMs });
 
   const bodyRef = useRef<HTMLDivElement>(null);
 

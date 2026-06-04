@@ -15,7 +15,7 @@ interface TypewriterOptions {
  */
 export function useTypewriter(
   text: string,
-  { enabled, cps = 110, delayMs = 0 }: TypewriterOptions,
+  { enabled, cps = 55, delayMs = 0 }: TypewriterOptions,
 ): { shown: string; done: boolean } {
   const [count, setCount] = useState(enabled ? 0 : text.length);
 
@@ -57,7 +57,7 @@ interface LineStreamOptions {
  */
 export function useLineStream(
   lines: string[],
-  { enabled, lineMs = 650, delayMs = 0 }: LineStreamOptions,
+  { enabled, lineMs = 1300, delayMs = 0 }: LineStreamOptions,
 ): { shown: string[]; done: boolean } {
   const [n, setN] = useState(enabled ? 0 : lines.length);
 

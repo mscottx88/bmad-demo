@@ -17,7 +17,7 @@ interface Props {
 export default function CodeEditor({ files, enabled }: Props) {
   const [active, setActive] = useState(0);
   const file = files[active] ?? files[0];
-  const cps = file.kind === 'code' ? 130 : 200;
+  const cps = file.kind === 'code' ? 65 : 100;
   const { shown, done } = useTypewriter(file.content, { enabled, cps });
 
   const bodyRef = useRef<HTMLDivElement>(null);

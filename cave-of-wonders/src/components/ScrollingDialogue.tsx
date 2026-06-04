@@ -5,7 +5,7 @@ interface Props {
   reducedMotion: boolean;
 }
 
-const MS_PER_CHAR = 10; // 100 chars/sec ≈ 500 WPM at 5 chars/word
+const MS_PER_CHAR = 20; // 50 chars/sec ≈ 250 WPM at 5 chars/word
 
 /**
  * Typewriter-reveals text at ~500 WPM (10ms/char).
