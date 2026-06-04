@@ -14,12 +14,8 @@ interface Props {
 const INTRO_ACCENT = '#7fd1ff';
 const CLIMAX_ACCENT = '#ffd86b';
 
-/**
- * One original wish-granting genie (NOT Disney's Genie / Robin Williams).
- * The same character "shapeshifts" into each BMAD persona by swapping its
- * accent color, glyph, and nameplate — the teaching spine of the demo.
- */
-export default function Genie({
+/** BMAD agent avatar — morphs into each persona via accent/glyph/nameplate swap. */
+export default function AgentAvatar({
   persona,
   mode,
   reducedMotion,
@@ -28,7 +24,7 @@ export default function Genie({
 }: Props) {
   const accent =
     mode === 'climax' ? CLIMAX_ACCENT : persona ? persona.accent : INTRO_ACCENT;
-  const glyph = mode === 'climax' ? '🎉' : persona ? persona.glyph : '🧞';
+  const glyph = mode === 'climax' ? '✓' : persona ? persona.glyph : '⬡';
   const morphKey = mode === 'climax' ? 'climax' : persona ? persona.id : 'intro';
 
   const floatAnim = reducedMotion
@@ -67,7 +63,7 @@ export default function Genie({
             exit={reducedMotion ? { opacity: 0 } : { scale: 0.4, opacity: 0, filter: 'blur(8px)' }}
             transition={{ duration: reducedMotion ? 0 : 0.45 }}
           >
-            <span className="genie__glyph" role="img" aria-label={persona?.role ?? 'genie'}>
+            <span className="genie__glyph" role="img" aria-label={persona?.role ?? 'BMAD agent'}>
               {glyph}
             </span>
           </motion.div>

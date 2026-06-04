@@ -7,15 +7,12 @@ interface Props {
   reducedMotion: boolean;
 }
 
-/**
- * The vault on the side that fills with one treasure per completed phase —
- * the BMAD deliverables rendered as loot the audience watches pile up.
- */
-export default function TreasureVault({ collected, total, reducedMotion }: Props) {
+/** Sidebar panel that accumulates one artifact per completed BMAD phase. */
+export default function ArtifactPanel({ collected, total, reducedMotion }: Props) {
   return (
     <aside className="vault" data-testid="vault">
       <h2 className="vault__title">
-        Treasure Vault
+        Artifacts
         <span className="vault__count">
           {collected.length}/{total}
         </span>
@@ -39,7 +36,7 @@ export default function TreasureVault({ collected, total, reducedMotion }: Props
             </motion.li>
           ))}
         </AnimatePresence>
-        {collected.length === 0 && <li className="vault__empty">No treasures yet…</li>}
+        {collected.length === 0 && <li className="vault__empty">No artifacts yet.</li>}
       </ul>
     </aside>
   );

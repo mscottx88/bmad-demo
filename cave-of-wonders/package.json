@@ -1,9 +1,9 @@
 {
-  "name": "cave-of-wonders",
+  "name": "bmad-method-demo",
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "An on-rails React demo that teaches the BMAD method as a magic-carpet ride through a treasure cave.",
+  "description": "Interactive React demo that walks through the five BMAD method phases with live code generation.",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

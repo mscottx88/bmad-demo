@@ -1,5 +1,5 @@
 import type { CheatEntry } from '../types';
-import { PHASES, WISH } from './phases';
+import { PHASES, DEMO_APP } from './phases';
 
 /** Derived from PHASES so commands/outputs never drift out of sync. */
 export const CHEAT_ENTRIES: CheatEntry[] = [
@@ -46,7 +46,7 @@ export function cheatSheetMarkdown(): string {
 
   return `# BMAD Method — Quick Reference
 
-> Generated from the BMAD Method demo. Example: ${WISH.appName}.
+> Generated from the BMAD Method demo. Example: ${DEMO_APP.appName}.
 
 ## Getting started
 \`\`\`bash

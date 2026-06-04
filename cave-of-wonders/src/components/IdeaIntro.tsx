@@ -1,11 +1,11 @@
 import { motion } from 'framer-motion';
-import { WISH } from '../data/phases';
+import { DEMO_APP } from '../data/phases';
 
 interface Props {
   reducedMotion: boolean;
 }
 
-export default function WishIntro({ reducedMotion }: Props) {
+export default function IdeaIntro({ reducedMotion }: Props) {
   return (
     <motion.section
       className="scene wish-intro"
@@ -18,7 +18,7 @@ export default function WishIntro({ reducedMotion }: Props) {
       <p className="eyebrow">$ brainstorm —</p>
       <div className="prompt-block" aria-label="Brainstorming input">
         <span className="prompt-block__prefix">&gt;</span>
-        <blockquote className="wish-text">"{WISH.raw}"</blockquote>
+        <blockquote className="wish-text">"{DEMO_APP.raw}"</blockquote>
       </div>
       <p className="wish-intro__label">Your brainstorming input, before BMAD</p>
       <p className="hint">BMAD structures this into a shippable implementation in five phases.</p>

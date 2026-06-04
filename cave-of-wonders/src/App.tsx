@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useReducedMotion } from 'framer-motion';
 import Stage from './components/Stage';
-import Genie from './components/Genie';
-import WishIntro from './components/WishIntro';
+import AgentAvatar from './components/AgentAvatar';
+import IdeaIntro from './components/IdeaIntro';
 import Workspace from './components/Workspace';
-import ClimaxCeremony from './components/ClimaxCeremony';
+import BuildComplete from './components/BuildComplete';
 import CheatSheetScreen from './components/CheatSheetScreen';
 import CheatSheetPanel from './components/CheatSheetPanel';
-import TreasureVault from './components/TreasureVault';
+import ArtifactPanel from './components/ArtifactPanel';
 import Controls from './components/Controls';
 import Toolbar from './components/Toolbar';
 import ProgressBar from './components/ProgressBar';
@@ -173,7 +173,7 @@ export default function App() {
       {step.kind === 'phase' ? (
         <div className="ride ride--work">
           <header className="work-header">
-            <Genie
+            <AgentAvatar
               persona={step.phase!.persona}
               mode="phase"
               variant="mascot"
@@ -191,7 +191,7 @@ export default function App() {
               reducedMotion={reducedMotion}
               osChrome={osChrome}
             />
-            <TreasureVault collected={collected} total={PHASES.length} reducedMotion={reducedMotion} />
+            <ArtifactPanel collected={collected} total={PHASES.length} reducedMotion={reducedMotion} />
           </div>
         </div>
       ) : step.kind === 'cheatsheet' ? (
@@ -201,15 +201,15 @@ export default function App() {
       ) : (
         <div className="ride">
           <div className="ride__main">
-            <Genie persona={null} mode={step.kind} reducedMotion={reducedMotion} />
+            <AgentAvatar persona={null} mode={step.kind} reducedMotion={reducedMotion} />
             <div className="ride__center">
-              {step.kind === 'intro' && <WishIntro reducedMotion={reducedMotion} />}
+              {step.kind === 'intro' && <IdeaIntro reducedMotion={reducedMotion} />}
               {step.kind === 'climax' && (
-                <ClimaxCeremony totals={totals} reducedMotion={reducedMotion} />
+                <BuildComplete totals={totals} reducedMotion={reducedMotion} />
               )}
             </div>
           </div>
-          <TreasureVault collected={collected} total={PHASES.length} reducedMotion={reducedMotion} />
+          <ArtifactPanel collected={collected} total={PHASES.length} reducedMotion={reducedMotion} />
         </div>
       )}
 

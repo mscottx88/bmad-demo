@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import type { RewardTotals } from '../types';
-import { WISH } from '../data/phases';
+import { DEMO_APP } from '../data/phases';
 import RewardCounter from './RewardCounter';
 import Particles from './Particles';
 
@@ -13,14 +13,10 @@ interface Props {
 type Stage = 'gather' | 'hush' | 'erupt' | 'reveal';
 
 /**
- * The signature ritual: the collected treasures gather, the cave goes dark
- * and SILENT for a beat (the hush), then everything erupts in gold and the
- * finished app materializes. The hush→erupt contrast is the emotional payoff.
- *
- * Under reduced motion (and in tests) we jump straight to the reveal so the
- * end state is deterministic.
+ * Build-complete ceremony: pipeline→hush→erupt→reveal sequence.
+ * Under reduced motion jumps straight to reveal for deterministic snapshots.
  */
-export default function ClimaxCeremony({ totals, reducedMotion }: Props) {
+export default function BuildComplete({ totals, reducedMotion }: Props) {
   const [stage, setStage] = useState<Stage>(reducedMotion ? 'reveal' : 'gather');
 
   useEffect(() => {
@@ -117,12 +113,12 @@ const CHART_BARS = [
 /** Animated geospatial mock: heatmap blobs + pin plot + regional sales chart. */
 function AppMock() {
   return (
-    <div className="app-mock" data-testid="app-mock" aria-label={`${WISH.appName} app preview`}>
+    <div className="app-mock" data-testid="app-mock" aria-label={`${DEMO_APP.appName} app preview`}>
       <div className="app-mock__bar app-mock__bar--dark">
         <span className="app-mock__dot app-mock__dot--dark" />
         <span className="app-mock__dot app-mock__dot--dark" />
         <span className="app-mock__dot app-mock__dot--dark" />
-        <span className="app-mock__title app-mock__title--dark">📍 {WISH.appName}</span>
+        <span className="app-mock__title app-mock__title--dark">📍 {DEMO_APP.appName}</span>
       </div>
       <div className="app-mock__map-body">
         <div className="app-mock__map" aria-hidden>

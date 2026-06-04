@@ -1,23 +1,23 @@
 export type PersonaId = 'mary' | 'john' | 'winston' | 'sally' | 'amelia';
 export type OsChrome = 'mac' | 'win';
 
-/** One "costume" the genie shapeshifts into — a BMAD expert agent. */
+/** A BMAD expert agent persona displayed by AgentAvatar. */
 export interface Persona {
   id: PersonaId;
   name: string;
   role: string;
   /** Single emoji used as an original, IP-safe avatar accent. */
   glyph: string;
-  /** CSS color used to tint the genie + scene for this persona. */
+  /** CSS color used to tint the agent avatar and scene for this persona. */
   accent: string;
-  /** What the genie-as-this-persona exclaims during the phase. */
+  /** One-line statement this agent persona delivers during the phase. */
   line: string;
 }
 
-/** A collectible "treasure" — really a BMAD artifact for the sample wish. */
+/** A BMAD artifact produced by a phase — displayed in the ArtifactPanel. */
 export interface Artifact {
   id: string;
-  /** Emoji icon for the treasure in the vault. */
+  /** Emoji icon shown in the artifact panel. */
   icon: string;
   title: string;
   /** 3–6 short lines of realistic sample content shown on screen. */
@@ -58,10 +58,10 @@ export interface CheatEntry {
   does: string;
 }
 
-/** A single BMAD phase of the ride. */
+/** A single BMAD phase in the demo sequence. */
 export interface Phase {
   id: string;
-  /** 1-based phase number; also its step index in the ride. */
+  /** 1-based phase number; also its step index in the demo sequence. */
   index: number;
   bmadPhase: string;
   persona: Persona;

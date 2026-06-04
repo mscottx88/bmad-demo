@@ -9,7 +9,7 @@ interface Props {
 function stepLabel(step: RideStep, i: number): string {
   if (step.kind === 'intro') return 'Brainstorming';
   if (step.kind === 'climax') return 'Implementation';
-  if (step.kind === 'cheatsheet') return 'Recap';
+  if (step.kind === 'cheatsheet') return 'Cheat Sheet';
   return `${step.phase?.persona.name ?? i}`;
 }
 
