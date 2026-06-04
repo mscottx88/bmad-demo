@@ -17,7 +17,7 @@ import { useFullscreen } from './hooks/useFullscreen';
 import { useKeyboard } from './hooks/useKeyboard';
 import { playCue } from './audio';
 import { PHASES, RIDE_STEPS } from './data/phases';
-import type { RewardTotals, TreeFile } from './types';
+import type { OsChrome, RewardTotals, TreeFile } from './types';
 
 /**
  * Read once-only URL params so Playwright can seed a deterministic state:
@@ -51,6 +51,8 @@ export default function App() {
   const [present, setPresent] = useState(params.present);
   const [cheatOpen, setCheatOpen] = useState(false);
   const [muted, setMuted] = useState(true);
+  const [osChrome, setOsChrome] = useState<OsChrome>('mac');
+  const toggleOs = useCallback(() => setOsChrome((c) => (c === 'mac' ? 'win' : 'mac')), []);
   const fullscreen = useFullscreen();
 
   const step = steps[sequencer.index];
@@ -163,6 +165,8 @@ export default function App() {
           onToggleMute={toggleMute}
           onPresent={enterPresent}
           onToggleCheat={() => setCheatOpen((o) => !o)}
+          osChrome={osChrome}
+          onToggleOs={toggleOs}
         />
       )}
 
@@ -185,6 +189,7 @@ export default function App() {
               phase={step.phase!}
               cumulativeFiles={cumulativeFiles}
               reducedMotion={reducedMotion}
+              osChrome={osChrome}
             />
             <TreasureVault collected={collected} total={PHASES.length} reducedMotion={reducedMotion} />
           </div>

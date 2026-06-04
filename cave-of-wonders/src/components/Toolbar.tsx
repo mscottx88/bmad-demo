@@ -1,12 +1,16 @@
+import type { OsChrome } from '../types';
+
 interface Props {
   muted: boolean;
   onToggleMute: () => void;
   onPresent: () => void;
   onToggleCheat: () => void;
+  osChrome: OsChrome;
+  onToggleOs: () => void;
 }
 
-/** Top-right controls: present, mute, cheat sheet. Hidden in present mode. */
-export default function Toolbar({ muted, onToggleMute, onPresent, onToggleCheat }: Props) {
+/** Top-right controls: present, mute, cheat sheet, OS chrome toggle. Hidden in present mode. */
+export default function Toolbar({ muted, onToggleMute, onPresent, onToggleCheat, osChrome, onToggleOs }: Props) {
   return (
     <div className="toolbar" data-testid="toolbar">
       <button type="button" className="toolbar__btn" onClick={onPresent} data-testid="present-btn">
@@ -21,6 +25,16 @@ export default function Toolbar({ muted, onToggleMute, onPresent, onToggleCheat 
         title="Toggle sound (M)"
       >
         {muted ? '🔇' : '🔊'}
+      </button>
+      <button
+        type="button"
+        className="toolbar__btn toolbar__btn--os"
+        onClick={onToggleOs}
+        data-testid="os-toggle"
+        title="Toggle IDE chrome style"
+        aria-label={`Switch to ${osChrome === 'mac' ? 'Windows' : 'macOS'} chrome`}
+      >
+        {osChrome === 'mac' ? '⊞ Win' : '● macOS'}
       </button>
       <button type="button" className="toolbar__btn" onClick={onToggleCheat} data-testid="cheat-toggle">
         📋 Cheat Sheet

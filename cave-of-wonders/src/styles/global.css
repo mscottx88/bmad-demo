@@ -680,8 +680,10 @@ body {
 
 .ride__work-body {
   display: flex;
+  flex: 1;
   gap: 16px;
   align-items: stretch;
+  min-height: 0;
 }
 
 /* ---------- Genie mascot + speech ---------- */
@@ -748,27 +750,87 @@ body {
   align-items: center;
   gap: 7px;
   padding: 8px 12px;
-  background: #1c1942;
   border-bottom: 1px solid var(--card-border);
+  flex-shrink: 0;
+}
+
+/* macOS chrome */
+.workspace__chrome--mac {
+  background: #1c1942;
 }
 
 .workspace__dot {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: #4a4475;
+  flex-shrink: 0;
 }
+
+.workspace__dot--red    { background: #ff5f56; }
+.workspace__dot--yellow { background: #ffbd2e; }
+.workspace__dot--green  { background: #27c93f; }
 
 .workspace__name {
   margin-left: 8px;
   font-size: 12px;
   color: var(--ink-dim);
+  font-family: 'Cascadia Code', 'Fira Code', Consolas, monospace;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Windows 11 chrome */
+.workspace__chrome--win {
+  background: #202020;
+  padding: 6px 0 6px 12px;
+}
+
+.workspace__name--win {
+  flex: 1;
+  font-size: 12px;
+  color: #9ca3af;
+  font-family: 'Cascadia Code', 'Fira Code', Consolas, monospace;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.workspace__winbtns {
+  display: flex;
+  align-self: stretch;
+  margin-left: auto;
+}
+
+.workspace__wbtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 100%;
+  font-size: 11px;
+  color: #9ca3af;
+  cursor: default;
+  transition: background 0.1s;
+  user-select: none;
+}
+
+.workspace__wbtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.workspace__wbtn--close:hover {
+  background: #c42b1c;
+  color: #fff;
 }
 
 .workspace__grid {
   display: grid;
   grid-template-columns: 184px 1fr;
-  height: 408px;
+  flex: 1;
+  min-height: 360px;
+  overflow: hidden;
 }
 
 /* min-height:0 lets the fixed-height tracks constrain children so their
@@ -1307,6 +1369,12 @@ body {
 .toolbar__btn:hover,
 .cheat-toggle:hover {
   border-color: color-mix(in srgb, var(--gold) 70%, transparent);
+}
+
+.toolbar__btn--os {
+  font-family: 'Cascadia Code', 'Fira Code', Consolas, monospace;
+  font-size: 12px;
+  letter-spacing: 0.5px;
 }
 
 .cheat-backdrop {

@@ -1,4 +1,5 @@
 export type PersonaId = 'mary' | 'john' | 'winston' | 'sally' | 'amelia';
+export type OsChrome = 'mac' | 'win';
 
 /** One "costume" the genie shapeshifts into — a BMAD expert agent. */
 export interface Persona {
