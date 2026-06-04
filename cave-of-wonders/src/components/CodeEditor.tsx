@@ -1,4 +1,4 @@
-import { Fragment, useState, type ReactNode } from 'react';
+import { Fragment, useEffect, useRef, useState, type ReactNode } from 'react';
 import { useTypewriter } from '../hooks/useStream';
 import CopyButton from './CopyButton';
 import type { EditorContent } from '../types';
@@ -19,6 +19,12 @@ export default function CodeEditor({ files, enabled }: Props) {
   const file = files[active] ?? files[0];
   const cps = file.kind === 'code' ? 130 : 200;
   const { shown, done } = useTypewriter(file.content, { enabled, cps });
+
+  const bodyRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = bodyRef.current;
+    if (el) el.scrollTop = el.scrollHeight;
+  }, [shown]);
 
   return (
     <div
@@ -46,7 +52,7 @@ export default function CodeEditor({ files, enabled }: Props) {
         <CopyButton text={file.content} label={`Copy ${file.filename}`} className="editor__copy" />
       </div>
 
-      <div className={`editor__body editor__body--${file.kind}`}>
+      <div ref={bodyRef} className={`editor__body editor__body--${file.kind}`}>
         {file.kind === 'doc' ? (
           <MarkdownLite text={shown} />
         ) : file.diff ? (

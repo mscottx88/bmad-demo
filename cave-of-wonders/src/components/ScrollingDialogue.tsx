@@ -15,6 +15,7 @@ const MS_PER_CHAR = 10; // 100 chars/sec ≈ 500 WPM at 5 chars/word
 export default function ScrollingDialogue({ text, reducedMotion }: Props) {
   const [visibleCount, setVisibleCount] = useState(reducedMotion ? text.length : 0);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const bodyRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setVisibleCount(reducedMotion ? text.length : 0);
@@ -22,9 +23,6 @@ export default function ScrollingDialogue({ text, reducedMotion }: Props) {
     if (reducedMotion || text.length === 0) return;
 
     intervalRef.current = setInterval(() => {
-      // Keep setInterval callback pure: no clearInterval inside setState updater.
-      // Interval self-terminates as a no-op once visibleCount reaches text.length;
-      // the useEffect cleanup clears it on unmount or text/reducedMotion change.
       setVisibleCount((n) => Math.min(n + 1, text.length));
     }, MS_PER_CHAR);
 
@@ -36,8 +34,14 @@ export default function ScrollingDialogue({ text, reducedMotion }: Props) {
     };
   }, [text, reducedMotion]);
 
+  useEffect(() => {
+    const el = bodyRef.current;
+    if (el) el.scrollTop = el.scrollHeight;
+  }, [visibleCount]);
+
   return (
     <div
+      ref={bodyRef}
       className="scrolling-dialogue"
       data-testid="scrolling-dialogue"
       aria-label={text}
