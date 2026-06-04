@@ -1252,6 +1252,36 @@ body {
   cursor: pointer;
 }
 
+.cheat__hero {
+  background: color-mix(in srgb, var(--gold) 10%, #0c0b1f);
+  border: 1px solid color-mix(in srgb, var(--gold) 50%, transparent);
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-bottom: 14px;
+}
+
+.cheat__hero-cmd {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.cheat__hero-cmd code {
+  font-family: 'Cascadia Code', 'Fira Code', Consolas, monospace;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 0.5px;
+}
+
+.cheat__hero-desc {
+  margin: 0;
+  font-size: 13px;
+  color: var(--ink-dim);
+  line-height: 1.55;
+}
+
 .cheat__gs {
   background: #0c0b1f;
   border: 1px solid var(--card-border);

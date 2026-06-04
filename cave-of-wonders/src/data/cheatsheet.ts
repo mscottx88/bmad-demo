@@ -29,13 +29,15 @@ export const CHEAT_ENTRIES: CheatEntry[] = [
   },
 ];
 
-/** Copy-pasteable "get going" block shown on the cheat sheet. */
+/** The entry-point command — displayed as a hero block on the cheat sheet. */
+export const BMAD_HELP = {
+  command: '/bmad-help',
+  does: 'Your BMAD navigator. Run it at any point — it reads your project context and tells you exactly which command to run next and why.',
+} as const;
+
+/** Install command shown in the getting-started block. */
 export const GETTING_STARTED: string[] = [
-  '# Install BMAD into your project',
   'npx bmad-method install',
-  '',
-  '# Then, inside the project:',
-  '/bmad-help        # ask what to do next',
 ];
 
 /** Build the downloadable Markdown cheat sheet from the live data. */
@@ -48,7 +50,13 @@ export function cheatSheetMarkdown(): string {
 
 > Generated from the BMAD Method demo. Example: ${DEMO_APP.appName}.
 
-## Getting started
+## Start here — your navigator
+\`\`\`
+${BMAD_HELP.command}
+\`\`\`
+${BMAD_HELP.does}
+
+## Install
 \`\`\`bash
 ${GETTING_STARTED.join('\n')}
 \`\`\`
@@ -56,8 +64,6 @@ ${GETTING_STARTED.join('\n')}
 ## The workflow
 ${steps}
 
-## Tip
-Run each command in a fresh context window. \`/bmad-help\` always
-tells you the next recommended step.
+Tip: run each command in a fresh context window.
 `;
 }

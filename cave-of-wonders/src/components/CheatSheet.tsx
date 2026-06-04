@@ -1,5 +1,5 @@
 import CopyButton from './CopyButton';
-import { CHEAT_ENTRIES, GETTING_STARTED, cheatSheetMarkdown } from '../data/cheatsheet';
+import { BMAD_HELP, CHEAT_ENTRIES, GETTING_STARTED, cheatSheetMarkdown } from '../data/cheatsheet';
 
 /** Trigger an in-browser download of the cheat sheet as Markdown (no network). */
 function downloadMarkdown() {
@@ -35,10 +35,18 @@ export default function CheatSheet() {
         </div>
       </div>
 
+      <div className="cheat__hero">
+        <div className="cheat__hero-cmd">
+          <code>{BMAD_HELP.command}</code>
+          <CopyButton text={BMAD_HELP.command} label="Copy /bmad-help" />
+        </div>
+        <p className="cheat__hero-desc">{BMAD_HELP.does}</p>
+      </div>
+
       <div className="cheat__gs">
         <div className="cheat__gs-head">
-          <span>Getting started</span>
-          <CopyButton text={gettingStarted} label="Copy getting-started" />
+          <span>Install</span>
+          <CopyButton text={gettingStarted} label="Copy install command" />
         </div>
         <pre className="cheat__gs-pre">{gettingStarted}</pre>
       </div>
