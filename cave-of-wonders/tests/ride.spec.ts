@@ -7,7 +7,7 @@ import { test, expect } from '@playwright/test';
  */
 const seed = (step: number) => `/?paused=1&step=${step}&reducedMotion=1`;
 
-test('intro — the wish (Diamond in the Rough)', async ({ page }) => {
+test('intro — feature idea prompt', async ({ page }) => {
   await page.goto(seed(0));
   await expect(page.getByTestId('wish-intro')).toBeVisible();
   await expect(page.getByTestId('genie')).toBeVisible();
@@ -30,6 +30,7 @@ test('planning phase — command + rendered doc + growing tree', async ({ page }
   await expect(page.getByTestId('genie-speech')).toBeVisible();
   await expect(page.getByTestId('tree-file')).toHaveCount(3);
   await expect(page.getByTestId('vault-item')).toHaveCount(3);
+  await expect(page.getByTestId('scrolling-dialogue')).toBeVisible();
   await expect(page).toHaveScreenshot('phase-3-architecture.png');
 });
 

@@ -77,6 +77,8 @@ export interface Phase {
   editor: EditorContent[];
   /** One-line "what it does" for the cheat sheet. */
   summary: string;
+  /** 60-75 word technical rationale, typewriter-revealed at 500 WPM during the phase. */
+  dialogue: string;
 }
 
 export type RideStepKind = 'intro' | 'phase' | 'climax' | 'cheatsheet';

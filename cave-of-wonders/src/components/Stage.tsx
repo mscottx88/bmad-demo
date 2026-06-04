@@ -18,8 +18,8 @@ export default function Stage({ accent, present = false, children }: Props) {
       <div className="stage__glow" aria-hidden />
       <div className="stage__motes" aria-hidden />
       <header className="stage__header">
-        <h1 className="stage__brand">🪔 Cave of Wonders</h1>
-        <p className="stage__subtitle">How the BMAD method grants your wish</p>
+        <h1 className="stage__brand">BMAD METHOD</h1>
+        <p className="stage__subtitle">A structured workflow for shipping AI-assisted features — five agents, five artifacts</p>
       </header>
       {children}
     </div>

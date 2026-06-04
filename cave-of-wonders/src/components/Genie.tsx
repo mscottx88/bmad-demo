@@ -57,7 +57,7 @@ export default function Genie({
         </AnimatePresence>
       )}
       <motion.div className="genie__body" animate={floatAnim}>
-        <div className="genie__smoke" aria-hidden />
+        <div className="genie__cursor" aria-hidden />
         <AnimatePresence mode="wait">
           <motion.div
             key={morphKey}
@@ -89,9 +89,9 @@ export default function Genie({
               <span>{persona.role}</span>
             </>
           ) : mode === 'climax' ? (
-            <strong>Wish granted!</strong>
+            <strong>Shipped ✓</strong>
           ) : (
-            <strong>Your Genie</strong>
+            <strong>BMAD Agent</strong>
           )}
         </motion.div>
       </AnimatePresence>

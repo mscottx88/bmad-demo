@@ -2,6 +2,7 @@ import type { Phase, TreeFile } from '../types';
 import FileTree from './FileTree';
 import CodeEditor from './CodeEditor';
 import Terminal from './Terminal';
+import ScrollingDialogue from './ScrollingDialogue';
 
 interface Props {
   phase: Phase;
@@ -33,6 +34,7 @@ export default function Workspace({ phase, cumulativeFiles, reducedMotion }: Pro
         <div className="workspace__main">
           <CodeEditor files={phase.editor} enabled={enabled} />
           <Terminal command={phase.command} output={phase.terminal} enabled={enabled} />
+          <ScrollingDialogue text={phase.dialogue} reducedMotion={reducedMotion} />
         </div>
       </div>
     </div>

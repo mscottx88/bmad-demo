@@ -45,7 +45,7 @@ export default function ClimaxCeremony({ totals, reducedMotion }: Props) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
-            The treasures swirl together…
+            Running pipeline…
           </motion.p>
         )}
 
@@ -69,7 +69,7 @@ export default function ClimaxCeremony({ totals, reducedMotion }: Props) {
             animate={{ scale: 1.1, opacity: 1 }}
             exit={{ opacity: 0 }}
           >
-            YOUR WISH… IS GRANTED!
+            ✓ BUILD COMPLETE
           </motion.p>
         )}
 
@@ -82,11 +82,11 @@ export default function ClimaxCeremony({ totals, reducedMotion }: Props) {
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: reducedMotion ? 0 : 0.6, ease: 'backOut' }}
           >
-            <p className="reveal__eyebrow">✨ Built &amp; ready ✨</p>
+            <p className="reveal__eyebrow">Ready to ship</p>
             <AppMock />
             <RewardCounter totals={totals} animate={!reducedMotion} />
             <p className="reveal__footnote">
-              That’s the BMAD method — one wish, five experts, real treasure.
+              5 agents · 5 artifacts · shipped on spec.
             </p>
           </motion.div>
         )}
