@@ -410,7 +410,7 @@ body {
 /* Dark map canvas */
 .app-mock__map {
   position: relative;
-  background: #0d1b2a;
+  background: #232a1c;
   overflow: hidden;
 }
 
