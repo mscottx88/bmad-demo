@@ -35,20 +35,20 @@ export default function CheatSheet() {
         </div>
       </div>
 
-      <div className="cheat__hero">
-        <div className="cheat__hero-cmd">
-          <code>{BMAD_HELP.command}</code>
-          <CopyButton text={BMAD_HELP.command} label="Copy /bmad-help" />
-        </div>
-        <p className="cheat__hero-desc">{BMAD_HELP.does}</p>
-      </div>
-
       <div className="cheat__gs">
         <div className="cheat__gs-head">
           <span>Install</span>
           <CopyButton text={gettingStarted} label="Copy install command" />
         </div>
         <pre className="cheat__gs-pre">{gettingStarted}</pre>
+      </div>
+
+      <div className="cheat__hero">
+        <div className="cheat__hero-cmd">
+          <code>{BMAD_HELP.command}</code>
+          <CopyButton text={BMAD_HELP.command} label="Copy /bmad-help" />
+        </div>
+        <p className="cheat__hero-desc">{BMAD_HELP.does}</p>
       </div>
 
       <ol className="cheat__list">
