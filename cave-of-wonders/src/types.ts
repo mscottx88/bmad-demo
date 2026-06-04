@@ -1,0 +1,95 @@
+export type PersonaId = 'mary' | 'john' | 'winston' | 'sally' | 'amelia';
+
+/** One "costume" the genie shapeshifts into — a BMAD expert agent. */
+export interface Persona {
+  id: PersonaId;
+  name: string;
+  role: string;
+  /** Single emoji used as an original, IP-safe avatar accent. */
+  glyph: string;
+  /** CSS color used to tint the genie + scene for this persona. */
+  accent: string;
+  /** What the genie-as-this-persona exclaims during the phase. */
+  line: string;
+}
+
+/** A collectible "treasure" — really a BMAD artifact for the sample wish. */
+export interface Artifact {
+  id: string;
+  /** Emoji icon for the treasure in the vault. */
+  icon: string;
+  title: string;
+  /** 3–6 short lines of realistic sample content shown on screen. */
+  snippet: string[];
+}
+
+export interface RewardDelta {
+  hoursSaved: number;
+  testsPassing?: number;
+}
+
+/** A file produced during the workflow, shown in the growing file tree. */
+export interface TreeFile {
+  /** Repo-relative path, e.g. 'planning/prd.md' or 'src/api/recipes.ts'. */
+  path: string;
+}
+
+export type EditorKind = 'doc' | 'code';
+export type EditorLanguage = 'md' | 'ts' | 'tsx';
+
+/** What the code editor streams/renders during a phase (one editor tab). */
+export interface EditorContent {
+  /** Tab label, e.g. 'prd.md' or 'recipes.ts'. */
+  filename: string;
+  /** 'doc' renders Markdown-lite; 'code' shows token-colored source. */
+  kind: EditorKind;
+  language: EditorLanguage;
+  content: string;
+  /** When true (code only), render as a green '+ added' diff (PR-like). */
+  diff?: boolean;
+}
+
+/** A row in the takeaway cheat sheet — derived from a Phase. */
+export interface CheatEntry {
+  phase: string;
+  command: string;
+  output: string;
+  does: string;
+}
+
+/** A single BMAD phase of the ride. */
+export interface Phase {
+  id: string;
+  /** 1-based phase number; also its step index in the ride. */
+  index: number;
+  bmadPhase: string;
+  persona: Persona;
+  artifact: Artifact;
+  reward: RewardDelta;
+  durationMs: number;
+  /** The real BMAD command this phase runs, e.g. '/bmad-prd'. */
+  command: string;
+  /** Streamed terminal output lines for the command. */
+  terminal: string[];
+  /** Files this phase produces (appended to the cumulative tree). */
+  files: TreeFile[];
+  /** Editor tabs this phase shows (artifact doc, or one or more code files). */
+  editor: EditorContent[];
+  /** One-line "what it does" for the cheat sheet. */
+  summary: string;
+}
+
+export type RideStepKind = 'intro' | 'phase' | 'climax' | 'cheatsheet';
+
+export interface RideStep {
+  kind: RideStepKind;
+  /** Present only when kind === 'phase'. */
+  phase?: Phase;
+  durationMs: number;
+}
+
+export interface RewardTotals {
+  hoursSaved: number;
+  artifacts: number;
+  testsPassing: number;
+}
