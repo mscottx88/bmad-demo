@@ -842,7 +842,7 @@ body {
 
 .workspace__main {
   display: grid;
-  grid-template-rows: 1fr 130px minmax(0, 88px);
+  grid-template-rows: 1fr 130px minmax(0, 117px);
   min-width: 0;
   min-height: 0;
   height: 100%;
