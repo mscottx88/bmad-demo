@@ -380,15 +380,44 @@ body {
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
+.app-mock__bar--win {
+  background: #202020;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 6px 0 6px 10px;
+}
+
 .app-mock__dot {
   width: 9px;
   height: 9px;
   border-radius: 50%;
 }
 
-.app-mock__dot--dark {
-  background: #374151;
+.app-mock__dot--dark   { background: #374151; }
+.app-mock__dot--red    { background: #ff5f56; }
+.app-mock__dot--yellow { background: #ffbd2e; }
+.app-mock__dot--green  { background: #27c93f; }
+
+.app-mock__winbtns {
+  display: flex;
+  align-self: stretch;
+  margin-left: auto;
 }
+
+.app-mock__wbtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 100%;
+  font-size: 10px;
+  color: #9ca3af;
+  cursor: default;
+  user-select: none;
+  transition: background 0.1s;
+}
+
+.app-mock__wbtn:hover          { background: rgba(255, 255, 255, 0.1); color: #fff; }
+.app-mock__wbtn--close:hover   { background: #c42b1c; color: #fff; }
 
 .app-mock__title {
   margin-left: 6px;

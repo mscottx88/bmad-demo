@@ -205,7 +205,7 @@ export default function App() {
             <div className="ride__center">
               {step.kind === 'intro' && <IdeaIntro reducedMotion={reducedMotion} />}
               {step.kind === 'climax' && (
-                <BuildComplete totals={totals} reducedMotion={reducedMotion} />
+                <BuildComplete totals={totals} reducedMotion={reducedMotion} osChrome={osChrome} />
               )}
             </div>
           </div>
