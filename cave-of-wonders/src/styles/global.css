@@ -90,6 +90,7 @@ body {
 .ride {
   z-index: 1;
   flex: 1;
+  min-height: 0;
   width: min(1100px, 100%);
   display: grid;
   grid-template-columns: 1fr 260px;
@@ -659,6 +660,8 @@ body {
   gap: 12px;
   width: min(1180px, 100%);
   align-items: stretch;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .work-header {
