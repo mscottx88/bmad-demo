@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import type { RewardTotals } from '../types';
 import { WISH } from '../data/phases';
@@ -95,34 +95,68 @@ export default function ClimaxCeremony({ totals, reducedMotion }: Props) {
   );
 }
 
-/** A small mock of the finished "FridgeChef" app — the granted wish, made real. */
+const MAP_PINS = [
+  { x: 28, y: 45, tier: 'above', delay: 0 },
+  { x: 42, y: 35, tier: 'above', delay: 90 },
+  { x: 58, y: 52, tier: 'at', delay: 180 },
+  { x: 33, y: 60, tier: 'below', delay: 270 },
+  { x: 66, y: 38, tier: 'critical', delay: 360 },
+  { x: 74, y: 58, tier: 'above', delay: 450 },
+  { x: 50, y: 70, tier: 'at', delay: 540 },
+  { x: 20, y: 52, tier: 'below', delay: 630 },
+  { x: 45, y: 25, tier: 'above', delay: 720 },
+] as const;
+
+const CHART_BARS = [
+  { label: 'NE', pct: 94, color: '#f59e0b' },
+  { label: 'SE', pct: 61, color: '#ef4444' },
+  { label: 'MW', pct: 112, color: '#22c55e' },
+  { label: 'SW', pct: 78, color: '#f97316' },
+] as const;
+
+/** Animated geospatial mock: heatmap blobs + pin plot + regional sales chart. */
 function AppMock() {
   return (
     <div className="app-mock" data-testid="app-mock" aria-label={`${WISH.appName} app preview`}>
-      <div className="app-mock__bar">
-        <span className="app-mock__dot" />
-        <span className="app-mock__dot" />
-        <span className="app-mock__dot" />
-        <span className="app-mock__title">🍳 {WISH.appName}</span>
+      <div className="app-mock__bar app-mock__bar--dark">
+        <span className="app-mock__dot app-mock__dot--dark" />
+        <span className="app-mock__dot app-mock__dot--dark" />
+        <span className="app-mock__dot app-mock__dot--dark" />
+        <span className="app-mock__title app-mock__title--dark">📍 {WISH.appName}</span>
       </div>
-      <div className="app-mock__body">
-        <p className="app-mock__tagline">{WISH.tagline}</p>
-        <div className="app-mock__chips">
-          <span>🥚 eggs</span>
-          <span>🧀 cheese</span>
-          <span>🍅 tomato</span>
-          <span>🌿 basil</span>
+      <div className="app-mock__map-body">
+        <div className="app-mock__map" aria-hidden>
+          <div className="heat-blob heat-blob--1" />
+          <div className="heat-blob heat-blob--2" />
+          <div className="heat-blob heat-blob--3" />
+          {MAP_PINS.map((pin, i) => (
+            <div
+              key={i}
+              className={`map-pin map-pin--${pin.tier}`}
+              style={{ left: `${pin.x}%`, top: `${pin.y}%`, animationDelay: `${pin.delay}ms` }}
+            />
+          ))}
         </div>
-        <ul className="app-mock__recipes">
-          <li>
-            <span>Tomato &amp; Basil Frittata</span>
-            <span className="app-mock__match">100% match</span>
-          </li>
-          <li>
-            <span>Cheesy Caprese Toast</span>
-            <span className="app-mock__match">90% match</span>
-          </li>
-        </ul>
+        <div className="app-mock__chart" aria-hidden>
+          <p className="app-mock__chart-label">Sales vs. Benchmark</p>
+          {CHART_BARS.map((bar) => (
+            <div key={bar.label} className="chart-row">
+              <span className="chart-row__label">{bar.label}</span>
+              <div className="chart-row__track">
+                <div
+                  className="chart-row__bar"
+                  style={
+                    {
+                      '--bar-pct': `${bar.pct}%`,
+                      '--bar-color': bar.color,
+                    } as React.CSSProperties
+                  }
+                />
+              </div>
+              <span className="chart-row__val">{bar.pct}%</span>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

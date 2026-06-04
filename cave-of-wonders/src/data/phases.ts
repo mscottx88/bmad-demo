@@ -1,9 +1,9 @@
 import type { Phase, RideStep } from '../types';
 
 export const WISH = {
-  raw: 'I wish I had an app that turns whatever is in my fridge into dinner ideas.',
-  appName: 'FridgeChef',
-  tagline: 'Recipes from whatever you already have',
+  raw: 'I wish I could see how every Subway location performs against regional benchmarks — and where to open next.',
+  appName: 'SubwayIQ',
+  tagline: 'Franchise performance intelligence, on the map',
 } as const;
 
 export const PHASES: Phase[] = [
@@ -17,30 +17,30 @@ export const PHASES: Phase[] = [
       role: 'Analyst',
       glyph: '🔍',
       accent: '#5ec8d8',
-      line: 'Profiling users and market before we write a line of code.',
+      line: 'Profiling franchisees and market before we write a line of code.',
     },
     artifact: {
       id: 'research-scroll',
       icon: '📄',
       title: 'Product Brief',
       snippet: [
-        '73% of cooks waste food they forgot',
-        'Top ask: "use what I already own"',
-        'Gap: no ingredient-first recipe app',
+        '37k+ locations, zero location-level analytics',
+        'POS systems are siloed — no geo context',
+        'Franchisees make expansion decisions blind',
       ],
     },
     reward: { hoursSaved: 4 },
     durationMs: 9000,
     command: '/bmad-product-brief',
-    summary: 'Scout the market & users; capture the opportunity.',
+    summary: 'Scout the franchise analytics market; capture the opportunity.',
     dialogue:
-      'BMAD runs a research pass before any tickets exist. This catches the most common failure mode in AI-assisted work: generating code that solves the wrong problem. Market context and user pain points are captured as a product brief — a shared ground-truth that every downstream agent reads. Without it, the PRD is guesswork. With it, requirements have evidence.',
+      'BMAD runs a research pass before any tickets exist. This one surfaces the real problem: 37,000 Subway franchisees make expansion decisions without location-level analytics. POS systems are siloed. The product brief captures that gap — correlating sales KPIs with geographic signals like foot traffic and competitor proximity. Without this document, every downstream agent is building for the wrong user.',
     terminal: [
       '$ /bmad-product-brief',
       '▸ loading domain context…',
-      '▸ running user research synthesis…',
-      '▸ identifying market gaps…',
-      '✓ wrote planning/product-brief.md (42 lines)',
+      '▸ analyzing franchise analytics market…',
+      '▸ identifying user pain points…',
+      '✓ wrote planning/product-brief.md (48 lines)',
     ],
     files: [{ path: 'planning/product-brief.md' }],
     editor: [
@@ -48,29 +48,31 @@ export const PHASES: Phase[] = [
         filename: 'product-brief.md',
         kind: 'doc',
         language: 'md',
-        content: `# Product Brief — FridgeChef
+        content: `# Product Brief — SubwayIQ
 
 ## Problem Statement
-Home cooks waste food they forget they own and stall on the
-nightly "what's for dinner?" decision. 73% report discarding
-ingredients weekly; only 12% of existing recipe apps support
-ingredient-first search.
+37,000+ Subway franchisees make expansion and remediation decisions
+without location-level analytics. POS systems are siloed; no tool
+correlates sales performance with geographic context (population
+density, foot traffic, competitor proximity).
 
 ## Target User
-Busy weeknight cooks (25–45) making fast, low-effort decisions.
-Primary device: mobile. Key constraint: one-handed use.
+Subway franchise owners (1–20 locations) making quarterly performance
+reviews and 3-year expansion plans. Primary workflow: monthly review
+meeting, laptop, 30 minutes.
 
 ## Opportunity
-An ingredient-first recipe matcher fills a clear gap.
-No existing app ranks by "fewest missing items."
+A location-intelligence dashboard correlating sales KPIs with geospatial
+signals fills an unaddressed gap in franchise tooling. No existing product
+connects POS export data to a geographic map layer.
 
 ## Success Metrics
-- Time-to-first-recipe < 10s
-- Session-to-recipe rate ≥ 60%
-- Food waste self-report down 20% at 30 days
+- Dashboard load time (37k pins) < 2s on a standard laptop
+- Franchisee can identify underperforming locations in < 30s
+- Benchmark comparison visible without any configuration
 
 ## Out of Scope (v1)
-- Social sharing, accounts, nutrition data`,
+- Predictive modeling, competitor data APIs, mobile native app`,
       },
     ],
   },
@@ -84,16 +86,16 @@ No existing app ranks by "fewest missing items."
       role: 'Product Manager',
       glyph: '📋',
       accent: '#f4b740',
-      line: 'Pinning requirements now. Drift kills sprint velocity.',
+      line: 'Pinning requirements now. Drift kills dashboards before they ship.',
     },
     artifact: {
       id: 'prd-scroll',
       icon: '📝',
       title: 'PRD',
       snippet: [
-        'AC: ingredient input → ranked recipes < 2s',
-        'AC: match score = owned / required',
-        'AC: one-tap shopping list for missing items',
+        'AC: 37k pins render < 2s',
+        'AC: heatmap toggle < 300ms',
+        'AC: click pin → panel < 200ms',
       ],
     },
     reward: { hoursSaved: 6 },
@@ -101,13 +103,13 @@ No existing app ranks by "fewest missing items."
     command: '/bmad-prd',
     summary: 'Pin down exactly what to build and why.',
     dialogue:
-      'Requirements drift accounts for roughly 40% of sprint rework. BMAD\'s PM agent forces every feature to a testable acceptance criterion — no vague "should feel fast" allowed. This file becomes the contract: if it\'s not in the PRD, it won\'t be in the build. The developer agent reads this file first and generates story tasks directly from its acceptance criteria.',
+      'Requirements drift kills dashboards. The most common failure: building the map before defining what makes a pin red versus green. BMAD\'s PM agent locks every acceptance criterion — including a 2-second render time for 37,000 pins — before Winston chooses between Leaflet and MapLibre. The filter behavior, click interaction, and color-blind-safe tier palette are all in this file.',
     terminal: [
       '$ /bmad-prd',
       '▸ loading product-brief.md…',
       '▸ eliciting requirements…',
       '▸ generating acceptance criteria…',
-      '✓ wrote planning/prd.md (68 lines)',
+      '✓ wrote planning/prd.md (74 lines)',
     ],
     files: [{ path: 'planning/prd.md' }],
     editor: [
@@ -115,34 +117,36 @@ No existing app ranks by "fewest missing items."
         filename: 'prd.md',
         kind: 'doc',
         language: 'md',
-        content: `# PRD — FridgeChef
+        content: `# PRD — SubwayIQ
 
 ## Goal
-Dinner ideas ranked by ingredients you already own.
+Map-first franchise analytics: every location on the map,
+every benchmark visible at a glance.
 
 ## Functional Requirements
 
-### FR-01: Ingredient Input
-- User enters comma-separated or chip-style ingredients
-- Input persists across page refresh (localStorage)
-- AC: Given ≥ 1 ingredient, recipes appear within 2s
+### FR-01: Location Map
+- All franchises rendered as pins, colored by performance tier
+  (green ≥ 110%, yellow 90–110%, orange 70–89%, red < 70%)
+- Pins cluster below zoom level 10; expand on zoom-in
+- AC: 37,000 pins render in < 2s on a standard laptop
 
-### FR-02: Recipe Ranking
-- Recipes ranked by match = owned / required
-- Ties broken by total ingredient count (ascending)
-- AC: Given ["eggs","cheese"], top result has match ≥ 0.8
+### FR-02: Heatmap Layer
+- Toggleable heatmap overlay weighted by gross sales
+- AC: Toggle animation completes in < 300ms
 
-### FR-03: Shopping List
-- Tapping a recipe shows missing ingredients
-- One tap copies list to clipboard
-- AC: missing items = required − owned (case-insensitive)
+### FR-03: Location Detail
+- Click any pin → side panel with 12-month sales sparkline
+- AC: Panel opens in < 200ms with pre-cached data
+
+### FR-04: Segment Filter
+- Filter pins by tier (above/at/below/critical)
+- AC: Filter re-renders map in < 100ms (client-side only)
 
 ## Non-Functional Requirements
-- Bundle size < 200 kB gzipped
-- First paint < 1.5s on 4G
-
-## Out of Scope (v1)
-- Accounts, social sharing, nutrition data`,
+- Bundle size < 400 kB gzipped (MapLibre included)
+- WCAG 2.1 AA (color-blind-safe tier palette)
+- First paint < 1.5s on 4G`,
       },
     ],
   },
@@ -156,16 +160,16 @@ Dinner ideas ranked by ingredients you already own.
       role: 'Architect',
       glyph: '🏛️',
       accent: '#8a7fcf',
-      line: 'Wrong abstractions cost 10× to fix. Here\'s the ADR.',
+      line: 'MapLibre vs Leaflet at 37k pins. ADR-001 decides.',
     },
     artifact: {
       id: 'blueprint-gem',
       icon: '⚙️',
       title: 'Architecture',
       snippet: [
-        'React + Vite (TS) · Playwright tests',
-        'GET /api/recipes?have=eggs,cheese',
-        'Rank: match = owned / required',
+        'ADR-001: MapLibre GL (WebGL, 60fps at 37k)',
+        'ADR-002: bundled GeoJSON (no tile server)',
+        'heatmap weight = grossSales / maxGrossSales',
       ],
     },
     reward: { hoursSaved: 5 },
@@ -173,13 +177,13 @@ Dinner ideas ranked by ingredients you already own.
     command: '/bmad-create-architecture',
     summary: 'Choose the stack and system boundaries.',
     dialogue:
-      'Choosing the wrong abstraction costs 10× what choosing correctly costs upfront. This phase produces a minimal Architecture Decision Record — stack, data model, API contract, and deployment shape — decided once and shared across all downstream agents. No surprise "we should have used Postgres" conversations mid-sprint. Every developer agent that follows reads this file first.',
+      'MapLibre GL or Leaflet: the choice looks arbitrary until you need 37,000 WebGL markers at 60fps on mobile. Winston documents that tradeoff in ADR-001 — one decision, made once, referenced by every downstream agent. The cluster radius, heatmap weight formula, and GeoJSON bundle strategy are locked here. No "why did we use this?" surprise in code review.',
     terminal: [
       '$ /bmad-create-architecture',
       '▸ loading prd.md…',
-      '▸ evaluating stack options…',
+      '▸ evaluating map rendering options…',
       '▸ writing ADR-001, ADR-002…',
-      '✓ wrote planning/architecture.md (85 lines)',
+      '✓ wrote planning/architecture.md (92 lines)',
     ],
     files: [{ path: 'planning/architecture.md' }],
     editor: [
@@ -187,39 +191,43 @@ Dinner ideas ranked by ingredients you already own.
         filename: 'architecture.md',
         kind: 'doc',
         language: 'md',
-        content: `# Architecture — FridgeChef
+        content: `# Architecture — SubwayIQ
 
 ## Stack
 - Frontend: React 18 + Vite 5 (TypeScript strict)
-- Tests: Playwright (snapshot + integration)
-- Deploy: static host (no SSR needed)
+- Map: MapLibre GL JS (WebGL, no API key required)
+- Charts: D3 v7 (sparklines in side panel)
+- Tests: Playwright (map interaction + snapshot)
+- Deploy: static host (GeoJSON bundled at build time)
 
-## ADR-001: Stateless API
-**Decision:** Express REST, no session state.
-**Rationale:** Trivial to host; no auth in v1.
-**Endpoint:** GET /api/recipes?have=eggs,cheese
+## ADR-001: MapLibre over Leaflet
+**Decision:** MapLibre GL for the map renderer.
+**Rationale:** 37k WebGL markers at 60fps; Leaflet SVG
+  degrades above ~5k markers on mobile.
+**Rejected:** Google Maps (API key cost), Deck.gl (bundle size).
 
-## ADR-002: In-Memory Recipe Index
-**Decision:** JSON dataset bundled at build time.
-**Rationale:** < 50 kB; no DB latency; offline-ready.
-**Rejected:** SQLite (overkill), external API (latency).
+## ADR-002: GeoJSON over WMS Tiles
+**Decision:** Bundle GeoJSON location data at build time.
+**Rationale:** < 2 MB compressed; eliminates tile server;
+  enables client-side filter with no network round-trips.
+**Rejected:** Tile server (infra cost), live API (latency).
 
 ## Data Model
 \`\`\`ts
-interface Recipe {
+interface LocationStats {
   id: string;
-  name: string;
-  ingredients: string[];  // lowercase, singular
-}
-interface RankedRecipe extends Recipe {
-  match: number;          // owned / required
-  missing: string[];
+  lat: number;
+  lng: number;
+  grossSales: number;        // trailing 12-month USD
+  regionalBenchmark: number;
+  tier: 'above' | 'at' | 'below' | 'critical';
+  monthlySales: number[];    // 12 months, oldest first
 }
 \`\`\`
 
-## API Contract
-GET /api/recipes?have=eggs,cheese
-→ RankedRecipe[] sorted by match desc`,
+## Heatmap Config
+weight = grossSales / maxGrossSales
+radius = 30px at zoom 10, scales linearly with zoom`,
       },
     ],
   },
@@ -233,30 +241,30 @@ GET /api/recipes?have=eggs,cheese
       role: 'UX Designer',
       glyph: '🎨',
       accent: '#ef7fa6',
-      line: 'Speccing every screen state. UX gaps cause 40% of rework.',
+      line: 'Speccing tier colors, hover states, and the 0-results overlay.',
     },
     artifact: {
       id: 'design-map',
       icon: '🗺️',
       title: 'UX Design',
       snippet: [
-        'Screen 1: chip input + empty state',
-        'Screen 2: ranked recipe cards',
-        'Screen 3: recipe + missing items list',
+        'Full-screen map + right side panel',
+        '4-tier color palette (WCAG AA)',
+        'Cluster → pin zoom interaction',
       ],
     },
     reward: { hoursSaved: 3 },
     durationMs: 9000,
     command: '/bmad-ux',
-    summary: 'Map the screens, flow, and tone.',
+    summary: 'Map the screens, interactions, and tier palette.',
     dialogue:
-      'UX gaps cause roughly 40% of implementation rework: missing button states, dead-end flows, validation deferred to the developer. BMAD\'s UX agent specs every screen and every transition before a line of code is written. The developer agent receives an unambiguous spec — not a Figma mockup with TBD annotations.',
+      'Sally specs the 4 performance tiers — colors, interaction states, and WCAG contrast ratios — before Amelia writes a handler. She also defines the loading skeleton, the 0-results overlay, and the panel animation. These are the UX gaps that cause 40% of rework in dashboard projects: a missing hover state or an unconstrained zoom level becomes a support ticket after launch.',
     terminal: [
       '$ /bmad-ux',
       '▸ loading prd.md + architecture.md…',
-      '▸ mapping user journey…',
-      '▸ speccing screens, states, edge cases…',
-      '✓ wrote planning/ux-design.md (74 lines)',
+      '▸ mapping dashboard layout and zones…',
+      '▸ speccing states, transitions, palette…',
+      '✓ wrote planning/ux-design.md (81 lines)',
     ],
     files: [{ path: 'planning/ux-design.md' }],
     editor: [
@@ -264,33 +272,43 @@ GET /api/recipes?have=eggs,cheese
         filename: 'ux-design.md',
         kind: 'doc',
         language: 'md',
-        content: `# UX Design — FridgeChef
+        content: `# UX Design — SubwayIQ
 
-## Screens
+## Layout
+Full-screen map (MapLibre) with overlay panels.
+Single-screen dashboard — no page navigation.
 
-### Screen 1: Pantry Input
-- Chip-style multi-input (comma or Enter adds chip)
-- Empty state: "Add your first ingredient"
-- Placeholder chips: "eggs", "cheese", "onion"
-- No submit button — results update live (debounce 300ms)
+### Map Layer
+- Heatmap: always-on at zoom > 8, auto-hides at zoom ≤ 8
+- Pins: clustered below zoom 10, individual above
+- Pin color: tier palette (green/yellow/orange/red)
 
-### Screen 2: Recipe List
-- Cards sorted by match % (badge top-right)
-- 0-result state: "No full matches — showing closest"
-- Skeleton loaders on first paint
+### Side Panel (right, 300px)
+- Opens on pin click; closes on map click-away
+- Header: location name + tier badge
+- Body: 12-month sparkline (D3 SVG line chart)
+- Footer: "+14% vs. regional avg" diff string
 
-### Screen 3: Recipe Detail
-- Ingredient list: ✓ owned (green) / ✗ missing (muted)
-- "Copy shopping list" button → clipboard
-- Back chevron returns to Screen 2
+### Toolbar (top-left overlay)
+- Segment filter: checkbox per tier
+- Heatmap toggle button
+- Reset view button
 
-## Interaction Principles
-- One-handed, mobile-first (thumb zone)
-- No dead ends: 0 results always shows closest match
-- Tone: direct, fast — no marketing copy
+## Tier Color Palette (WCAG AA)
+- above (≥110%): #22c55e  — green
+- at (90–110%):  #f59e0b  — amber
+- below (70–89%): #f97316 — orange
+- critical (<70%): #ef4444 — red
+
+## Interaction States
+- Pin hover: tooltip with gross sales + tier
+- Cluster hover: count badge
+- No results: "No locations match filter" center overlay
+- Loading: skeleton pins at last-known positions
 
 ## Flow
-input (debounced) → ranked list → detail → clipboard`,
+load → heatmap + clustered pins → zoom-in → individual pins
+→ click pin → side panel → sparkline + benchmark diff`,
       },
     ],
   },
@@ -311,119 +329,163 @@ input (debounced) → ranked list → detail → clipboard`,
       icon: '✅',
       title: 'Code + Passing Tests',
       snippet: [
-        '✓ matches recipes from ingredients',
-        '✓ ranks by fewest missing items',
+        '✓ 37k pins render < 2s',
+        '✓ heatmap toggle < 300ms',
         '18 / 18 passing',
       ],
     },
     reward: { hoursSaved: 12, testsPassing: 18 },
     durationMs: 11000,
     command: '/bmad-dev-story',
-    summary: 'Implement, wire the UI, and run the tests.',
+    summary: 'Implement map, heatmap, panel, and tests.',
     dialogue:
-      'Implementation runs against a pinned spec and a pinned architecture. No interpreted scope, no Friday-afternoon decisions about state management. The developer agent writes the code, writes the tests, and runs them in a single context. When the test suite goes green, the story closes and sprint status updates automatically.',
+      'Implementation runs against a pinned spec and a pinned architecture. MapLibre is initialized exactly as ADR-001 specifies. The heatmap weight formula comes directly from the architecture doc. Playwright tests verify pin render time, cluster behavior, and panel open latency — all acceptance criteria from the PRD. When all tests go green, the sprint story closes automatically.',
     terminal: [
       '$ /bmad-dev-story',
       '▸ loading prd.md, architecture.md, ux-design.md…',
-      '▸ implementing rankByPantry()…',
-      '▸ wiring React UI (3 screens)…',
-      '▸ writing Playwright tests…',
+      '▸ initializing MapLibre GL with ADR-001 config…',
+      '▸ wiring heatmap layer + clustered pins…',
+      '▸ implementing side panel + sparklines…',
       '▸ npx playwright test → 18/18 ✓',
-      '✓ shipped FridgeChef · sprint status: done',
+      '✓ shipped SubwayIQ · sprint status: done',
     ],
     files: [
-      { path: 'src/api/recipes.ts' },
-      { path: 'src/App.tsx' },
-      { path: 'tests/recipes.spec.ts' },
+      { path: 'src/map/SubwayMap.tsx' },
+      { path: 'src/components/LocationPanel.tsx' },
+      { path: 'tests/map.spec.ts' },
     ],
     editor: [
       {
-        filename: 'recipes.ts',
-        kind: 'code',
-        language: 'ts',
-        diff: true,
-        content: `// src/api/recipes.ts
-import type { Recipe, RankedRecipe } from './types';
-
-/**
- * Rank recipes by pantry coverage.
- * match = owned_ingredients / total_required
- * Ties broken by total ingredient count (ascending).
- */
-export function rankByPantry(
-  recipes: Recipe[],
-  have: string[],
-): RankedRecipe[] {
-  const owned = new Set(have.map((s) => s.toLowerCase().trim()));
-  return recipes
-    .map((recipe) => {
-      const missing = recipe.ingredients.filter(
-        (item) => !owned.has(item.toLowerCase()),
-      );
-      const match = 1 - missing.length / recipe.ingredients.length;
-      return { ...recipe, missing, match };
-    })
-    .sort((a, b) => b.match - a.match || a.ingredients.length - b.ingredients.length);
-}
-
-export function getShoppingList(recipe: RankedRecipe): string {
-  return recipe.missing.join('\\n');
-}`,
-      },
-      {
-        filename: 'App.tsx',
+        filename: 'SubwayMap.tsx',
         kind: 'code',
         language: 'tsx',
         diff: true,
-        content: `// src/App.tsx
-import { useDeferredValue, useState } from 'react';
-import { rankByPantry } from './api/recipes';
-import { RECIPES } from './data/recipes';
-import { PantryInput } from './components/PantryInput';
-import { RecipeList } from './components/RecipeList';
+        content: `// src/map/SubwayMap.tsx
+import maplibregl from 'maplibre-gl';
+import { useEffect, useRef } from 'react';
+import type { LocationStats } from '../types';
 
-export default function App() {
-  const [have, setHave] = useState<string[]>([]);
-  const deferred = useDeferredValue(have);
-  const matches = rankByPantry(RECIPES, deferred);
+interface Props {
+  locations: LocationStats[];
+  onSelect: (loc: LocationStats) => void;
+}
+
+export function SubwayMap({ locations, onSelect }: Props) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const mapRef = useRef<maplibregl.Map | null>(null);
+
+  useEffect(() => {
+    if (!containerRef.current || mapRef.current) return;
+    const map = new maplibregl.Map({
+      container: containerRef.current,
+      style: 'https://demotiles.maplibre.org/style.json',
+      center: [-98.5795, 39.8283],
+      zoom: 4,
+    });
+    map.on('load', () => {
+      map.addSource('locations', {
+        type: 'geojson',
+        data: toGeoJSON(locations),
+        cluster: true,
+        clusterRadius: 50,
+      });
+      map.addLayer({ id: 'heatmap', type: 'heatmap',
+        source: 'locations', maxzoom: 10,
+        paint: {
+          'heatmap-weight': ['/', ['get', 'grossSales'], 2_000_000],
+          'heatmap-radius': 30,
+        },
+      });
+    });
+    mapRef.current = map;
+    return () => map.remove();
+  }, []);
 
   return (
-    <main className="fridgechef">
-      <h1>FridgeChef</h1>
-      <PantryInput value={have} onChange={setHave} />
-      <RecipeList
-        recipes={matches}
-        isPending={deferred !== have}
-      />
-    </main>
+    <div ref={containerRef}
+      style={{ width: '100%', height: '100%' }}
+      data-testid="map-ready"
+    />
   );
 }`,
       },
       {
-        filename: 'recipes.spec.ts',
+        filename: 'LocationPanel.tsx',
+        kind: 'code',
+        language: 'tsx',
+        diff: true,
+        content: `// src/components/LocationPanel.tsx
+import * as d3 from 'd3';
+import { useEffect, useRef } from 'react';
+import type { LocationStats } from '../types';
+
+interface Props { location: LocationStats; onClose: () => void }
+
+export function LocationPanel({ location, onClose }: Props) {
+  const svgRef = useRef<SVGSVGElement>(null);
+
+  useEffect(() => {
+    if (!svgRef.current) return;
+    const w = 240, h = 60;
+    const x = d3.scaleLinear().domain([0, 11]).range([0, w]);
+    const y = d3.scaleLinear()
+      .domain([0, d3.max(location.monthlySales)!]).range([h, 0]);
+    const line = d3.line<number>()
+      .x((_, i) => x(i)).y((d) => y(d)).curve(d3.curveMonotoneX);
+    d3.select(svgRef.current).append('path')
+      .datum(location.monthlySales)
+      .attr('d', line).attr('fill', 'none')
+      .attr('stroke', TIER_COLOR[location.tier])
+      .attr('stroke-width', 2);
+  }, [location]);
+
+  const diff = ((location.grossSales / location.regionalBenchmark - 1) * 100);
+  return (
+    <aside className="location-panel" data-testid="location-panel">
+      <button onClick={onClose}>×</button>
+      <h2>{location.id}</h2>
+      <span className={\`tier-badge tier-badge--\${location.tier}\`}>
+        {location.tier}
+      </span>
+      <svg ref={svgRef} data-testid="sparkline" width={240} height={60} />
+      <p>{diff > 0 ? '+' : ''}{diff.toFixed(1)}% vs. regional avg</p>
+    </aside>
+  );
+}`,
+      },
+      {
+        filename: 'map.spec.ts',
         kind: 'code',
         language: 'ts',
         diff: true,
-        content: `// tests/recipes.spec.ts
+        content: `// tests/map.spec.ts
 import { test, expect } from '@playwright/test';
-import { rankByPantry } from '../src/api/recipes';
-import { RECIPES } from '../src/data/recipes';
 
-test('ranks by fewest missing ingredients', () => {
-  const ranked = rankByPantry(RECIPES, ['eggs', 'cheese']);
-  expect(ranked[0].missing.length).toBeLessThanOrEqual(
-    ranked[ranked.length - 1].missing.length,
+test('renders 37k location pins within 2s', async ({ page }) => {
+  const start = Date.now();
+  await page.goto('/');
+  await page.waitForSelector('[data-testid="map-ready"]');
+  expect(Date.now() - start).toBeLessThan(2000);
+});
+
+test('click pin opens performance panel', async ({ page }) => {
+  await page.goto('/');
+  await page.waitForSelector('[data-testid="map-ready"]');
+  await page.click('.maplibregl-canvas', { position: { x: 400, y: 300 } });
+  await expect(page.getByTestId('location-panel')).toBeVisible();
+  await expect(page.getByTestId('sparkline')).toBeVisible();
+});
+
+test('heatmap toggle completes in under 300ms', async ({ page }) => {
+  await page.goto('/');
+  await page.waitForSelector('[data-testid="map-ready"]');
+  const t = Date.now();
+  await page.click('[data-testid="heatmap-toggle"]');
+  await page.waitForFunction(() =>
+    document.querySelector('[data-testid="heatmap-toggle"]')
+      ?.getAttribute('aria-pressed') === 'false'
   );
-});
-
-test('match score is 1 when all ingredients owned', () => {
-  const [first] = rankByPantry(RECIPES, ['eggs', 'cheese', 'tomato', 'basil']);
-  expect(first.match).toBe(1);
-});
-
-test('missing list is case-insensitive', () => {
-  const [top] = rankByPantry(RECIPES, ['Eggs', 'CHEESE']);
-  expect(top.missing.every((m) => m === m.toLowerCase())).toBe(true);
+  expect(Date.now() - t).toBeLessThan(300);
 });`,
       },
     ],
